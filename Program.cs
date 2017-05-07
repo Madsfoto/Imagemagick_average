@@ -28,22 +28,6 @@ namespace AverageTest_IM_console
             return numOfFilesNumber;
         }
 
-        // create string appending function
-        string consoleString = "";
-
-        public string getConsoleString()
-        {
-            return consoleString;
-        }
-
-        public string setConsoleString(string appendix)
-        {
-            string appendedString = "";
-
-            // code
-            return appendedString;
-        }
-
 
         static void Main(string[] args)
         {
