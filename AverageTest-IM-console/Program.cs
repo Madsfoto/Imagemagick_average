@@ -17,7 +17,7 @@ namespace AverageTest_IM_console
         // make external integer as starting point for the second loop, that is outside the loop. Get set something?
 
         public int numOfFilesNumber = 0;
-        public string consoleString = "convert "; // The convert string that should be output of this application. 
+        public string consoleString = "convert"; // The convert string that should be output of this application. 
         public string howFarStr = "";
         public string average = "-average ";
         public string outputFilename = "";
@@ -47,10 +47,15 @@ namespace AverageTest_IM_console
         {
             // consoleString starts as "convert ", then add the filename, so the result is "convert 000001.jpg ". 
             // That way consoleString ends up with the important part (adding the filenames to the string) done. 
-            consoleString = String.Concat(consoleString, " ", appendix);
+            consoleString = String.Concat(consoleString, " ", appendix); // Original string SPACE AppendedString
             
             // 
             return consoleString;
+        }
+
+        public void clearConsoleString()
+        {
+            consoleString = "convert";
         }
 
         public string getOutputFilename()
@@ -97,7 +102,7 @@ namespace AverageTest_IM_console
 
             // Create list of all the jpgs in current folder
 
-            int fCountall = Directory.GetFiles(currentdir, "*", SearchOption.TopDirectoryOnly).Length; // count number of files in current dir
+            int fCountAll = Directory.GetFiles(currentdir, "*", SearchOption.TopDirectoryOnly).Length; // count number of files in current dir
             //int fCount = fCountall - (avgimg +2); // ffmpeg, batfile, (TODO: How many shuld I remove?)
             int fCount = 5; // as test
 
@@ -111,7 +116,8 @@ namespace AverageTest_IM_console
             
             for (int counterOfFiles=1; counterOfFiles <= fCount; counterOfFiles++)
             {
-                p.SetNumOfFilesNumber(howFar);
+                p.SetNumOfFilesNumber(howFar); //Set num of files to 1, then to 2 after avgimg has been run through.
+                
 
                 int num = p.GetNumOfFilesNumber();
 
@@ -119,8 +125,7 @@ namespace AverageTest_IM_console
                 //
                 // The files are named 000001.jpg, 000002.jpg and so on.
                 // 
-                //
-
+                
                 
                 //int startnumber = p.GetNumOfFilesNumber();
                 
@@ -134,28 +139,31 @@ namespace AverageTest_IM_console
                     // I want startnumber as the lowest number in the string, then adding on to the string from the startnumber. 
                     // 
                     
-                    string numstring = num.ToString(padding); // number with padding
+                    string numstring = num.ToString(padding)+".jpg"; // number with padding. Is incremented properly when running through the inner and outer loop.
+                    p.setConsoleString(numstring);
+                    // Which means it is in the string addition the problems are. 
                     
-                    string consolestring = p.getConsoleString();
-
-
-                    p.howFarStr = num.ToString(padding) + ".jpg";
-                    p.setConsoleString(p.howFarStr);
+                   
                     num = num + 1;
                     
-                    Console.WriteLine(consolestring);
+                    
                     
 
                     if(counterOfAvgImg == avgimg)
                     {
                         //setConsoleString(NEW STRING);
-                    //Console.WriteLine("Counter == avg img: " + comandLine);
-                    //Console.WriteLine("Counter == avg img: " + consolestring);
+                        // p.getConsoleString() gives the correct "convert 000001.jpg 000002.jpg 000003.jpg ... avgimg.jpg", 
+                        // 
+
+                        p.setOutputFilename("x");
+                        p.setConsoleString("12");
                         //Console.WriteLine(p.setOutputFilename("123456")); Works 8 may 2017 15.00 Mads Time
+                        
                     }
                     
                 }
-                    howFar = howFar + 1;
+                p.clearConsoleString();
+                    howFar = howFar + 1; // is incremented after a run through avgimg.
                 
 
             }
