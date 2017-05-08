@@ -47,9 +47,9 @@ namespace AverageTest_IM_console
         {
             // consoleString starts as "convert ", then add the filename, so the result is "convert 000001.jpg ". 
             // That way consoleString ends up with the important part (adding the filenames to the string) done. 
-            consoleString = String.Concat(consoleString, appendix);
+            consoleString = String.Concat(consoleString, " ", appendix);
             
-            // code
+            // 
             return consoleString;
         }
 
@@ -66,6 +66,7 @@ namespace AverageTest_IM_console
             string outputString = String.Concat("average", currentStartNumber, ".jpg");
 
             return outputString;
+            // tested 8 may 2017: Works
         }
 
         static void Main(string[] args)
@@ -90,7 +91,7 @@ namespace AverageTest_IM_console
              * and so on, until the end of images. 
              * 
              * 
-             * convert syntax:  coonvert NAME.jpg NAME2.jpg NAME3.jpg -average OUTPUT
+             * convert syntax:  convert NAME.jpg NAME2.jpg NAME3.jpg -average OUTPUT
              * 
              */
 
@@ -110,15 +111,18 @@ namespace AverageTest_IM_console
             
             for (int counterOfFiles=1; counterOfFiles <= fCount; counterOfFiles++)
             {
-                p.SetNumOfFilesNumber(counterOfFiles);
+                p.SetNumOfFilesNumber(howFar);
+
                 int num = p.GetNumOfFilesNumber();
 
                 // doing things with all files in the directory
                 //
                 // The files are named 000001.jpg, 000002.jpg and so on.
+                // 
+                //
 
-                p.SetNumOfFilesNumber(howFar);
-                int startnumber = p.GetNumOfFilesNumber();
+                
+                //int startnumber = p.GetNumOfFilesNumber();
                 
 
                 for (int counterOfAvgImg=1; counterOfAvgImg <= avgimg; counterOfAvgImg++)
@@ -131,18 +135,23 @@ namespace AverageTest_IM_console
                     // 
                     
                     string numstring = num.ToString(padding); // number with padding
-                    string consolestring = p.getConsoleString();
                     
-                    p.howFarStr = " " + num.ToString(padding) + ".jpg";
+                    string consolestring = p.getConsoleString();
+
+
+                    p.howFarStr = num.ToString(padding) + ".jpg";
+                    p.setConsoleString(p.howFarStr);
                     num = num + 1;
                     
+                    Console.WriteLine(consolestring);
                     
 
                     if(counterOfAvgImg == avgimg)
                     {
                         //setConsoleString(NEW STRING);
                     //Console.WriteLine("Counter == avg img: " + comandLine);
-                    Console.WriteLine("Counter == avg img: " + consolestring);
+                    //Console.WriteLine("Counter == avg img: " + consolestring);
+                        //Console.WriteLine(p.setOutputFilename("123456")); Works 8 may 2017 15.00 Mads Time
                     }
                     
                 }
