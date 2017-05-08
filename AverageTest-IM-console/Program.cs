@@ -13,12 +13,15 @@ namespace AverageTest_IM_console
     class Program
     {
 
+        // External variables 
         // make external integer as starting point for the second loop, that is outside the loop. Get set something?
+
         public int numOfFilesNumber = 0;
+        public string consoleString = "";
 
-            public int SetNumOfFilesNumber(int newnr)
+        public int SetNumOfFilesNumber(int newnr)
             {
-
+            
             numOfFilesNumber = newnr;
             return newnr;
             }
@@ -29,7 +32,7 @@ namespace AverageTest_IM_console
         }
 
         // create string appending function
-        string consoleString = "";
+        
 
         public string getConsoleString()
         {
@@ -38,16 +41,18 @@ namespace AverageTest_IM_console
 
         public string setConsoleString(string appendix)
         {
-            string appendedString = "";
+            
 
+            consoleString = String.Concat(consoleString, appendix);
+            
             // code
-            return appendedString;
+            return consoleString;
         }
 
 
         static void Main(string[] args)
         {
-            Program SNT = new Program();
+            Program p = new Program();
             // Input number of pictures to average together
             string str = args[0];
             int avgimg = 0;
@@ -78,6 +83,7 @@ namespace AverageTest_IM_console
             int howFar = 1;
 
             string convertString = "convert " ; // The convert string that should be output of this application. 
+            string howFarStr = "";
 
             //Console.WriteLine(convertString);
             string padding = "000000"; // padding for the integers so they fit the numbering scheme.
@@ -86,28 +92,28 @@ namespace AverageTest_IM_console
             
             for (int counterOfFiles=1; counterOfFiles <= fCount; counterOfFiles++)
             {
-                SNT.SetNumOfFilesNumber(counterOfFiles);
-                int num = SNT.GetNumOfFilesNumber();
+                p.SetNumOfFilesNumber(counterOfFiles);
+                int num = p.GetNumOfFilesNumber();
 
                 // doing things with all files in the directory
                 //
                 // The files are named 000001.jpg, 000002.jpg and so on.
 
-                SNT.SetNumOfFilesNumber(howFar);
-                int startnumber = SNT.GetNumOfFilesNumber(); 
+                p.SetNumOfFilesNumber(howFar);
+                int startnumber = p.GetNumOfFilesNumber();
+                
 
                 for (int counterOfAvgImg=1; counterOfAvgImg <= avgimg; counterOfAvgImg++)
                 {
                     // This will run the amount of times specified by the integer set by the command line.
                     // This function should write "000001.jpg 000002.jpg ... avgnr.jpg" as written above. 
 
-                    string howFarStr = ""; // string to write to
+                     // string to write to
 
                     // If I get the startnumber in here, I will do the same thing every time the loop runs. 
                     // I want startnumber as the lowest number in the string, then adding on to the string from the startnumber. 
                     // 
-
-
+                    
                     string numstring = num.ToString(padding); // number with padding
                     string comandLine = "";
 
