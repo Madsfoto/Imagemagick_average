@@ -17,7 +17,12 @@ namespace AverageTest_IM_console
         // make external integer as starting point for the second loop, that is outside the loop. Get set something?
 
         public int numOfFilesNumber = 0;
-        public string consoleString = "";
+        public string consoleString = "convert "; // The convert string that should be output of this application. 
+        public string howFarStr = "";
+        public string average = "-average ";
+        public string outputFilename = "";
+
+
 
         public int SetNumOfFilesNumber(int newnr)
             {
@@ -33,7 +38,6 @@ namespace AverageTest_IM_console
 
         // create string appending function
         
-
         public string getConsoleString()
         {
             return consoleString;
@@ -41,18 +45,34 @@ namespace AverageTest_IM_console
 
         public string setConsoleString(string appendix)
         {
-            
-
+            // consoleString starts as "convert ", then add the filename, so the result is "convert 000001.jpg ". 
+            // That way consoleString ends up with the important part (adding the filenames to the string) done. 
             consoleString = String.Concat(consoleString, appendix);
             
             // code
             return consoleString;
         }
 
+        public string getOutputFilename()
+        {
+            return outputFilename;
+        }
+
+        public string setOutputFilename(string currentStartNumber)
+        {
+            // This function is moddelled from setConsoleString, same functionality. 
+            // The consoleString is now looking like "convert 000001.jpg 000002.jpg ... 123456.jpg -average ", 
+            // the output filename is "average(currentStartNumber).jpg, where (currentStartNumber) is a 6 digit number.
+            string outputString = String.Concat("average", currentStartNumber, ".jpg");
+
+            return outputString;
+        }
 
         static void Main(string[] args)
         {
-            Program p = new Program();
+            Program p = new Program(); // to get access to the functions above
+            StringBuilder sb = new StringBuilder(); // to get access to sb.append("");
+
             // Input number of pictures to average together
             string str = args[0];
             int avgimg = 0;
@@ -82,9 +102,7 @@ namespace AverageTest_IM_console
 
             int howFar = 1;
 
-            string convertString = "convert " ; // The convert string that should be output of this application. 
-            string howFarStr = "";
-
+            
             //Console.WriteLine(convertString);
             string padding = "000000"; // padding for the integers so they fit the numbering scheme.
                                        //Console.Write(fCount.ToString(padding) + ".jpg"); // gives 000010.jpg with fCount = 10. 
@@ -108,25 +126,23 @@ namespace AverageTest_IM_console
                     // This will run the amount of times specified by the integer set by the command line.
                     // This function should write "000001.jpg 000002.jpg ... avgnr.jpg" as written above. 
 
-                     // string to write to
-
                     // If I get the startnumber in here, I will do the same thing every time the loop runs. 
                     // I want startnumber as the lowest number in the string, then adding on to the string from the startnumber. 
                     // 
                     
                     string numstring = num.ToString(padding); // number with padding
-                    string comandLine = "";
-
+                    string consolestring = p.getConsoleString();
                     
-                    howFarStr = " " + num.ToString(padding) + ".jpg";
+                    p.howFarStr = " " + num.ToString(padding) + ".jpg";
                     num = num + 1;
                     
                     
 
                     if(counterOfAvgImg == avgimg)
                     {
-                        
-                    Console.WriteLine("Counter == avg img: " + comandLine);
+                        //setConsoleString(NEW STRING);
+                    //Console.WriteLine("Counter == avg img: " + comandLine);
+                    Console.WriteLine("Counter == avg img: " + consolestring);
                     }
                     
                 }
