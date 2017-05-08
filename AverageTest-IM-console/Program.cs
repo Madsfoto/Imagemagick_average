@@ -76,7 +76,7 @@ namespace AverageTest_IM_console
         static void Main(string[] args)
         {
             Program p = new Program(); // to get access to the functions above
-            StringBuilder sb = new StringBuilder(); // to get access to sb.append("");
+            
 
             // Input number of pictures to average together
             string str = args[0];
