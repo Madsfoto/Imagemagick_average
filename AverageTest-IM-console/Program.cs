@@ -17,9 +17,8 @@ namespace AverageTest_IM_console
         // make external integer as starting point for the second loop, that is outside the loop. Get set something?
 
         public int numOfFilesNumber = 0;
-        public string consoleString = "convert"; // The convert string that should be output of this application. 
+        public string consoleString = "magick"; // The convert string that should be output of this application. 
         public string howFarStr = "";
-        public string average = "-average ";
         public string outputFilename = "";
 
 
@@ -63,12 +62,12 @@ namespace AverageTest_IM_console
             return outputFilename;
         }
 
-        public string setOutputFilename(string currentStartNumber)
+        public string setOutputFilenameString(string currentStartNumber)
         {
             // This function is moddelled from setConsoleString, same functionality. 
             // The consoleString is now looking like "convert 000001.jpg 000002.jpg ... 123456.jpg -average ", 
             // the output filename is "average(currentStartNumber).jpg, where (currentStartNumber) is a 6 digit number.
-            string outputString = String.Concat("average", currentStartNumber, ".jpg");
+            string outputString = String.Concat(" -evaluate_sequence mean ", "average" + currentStartNumber, ".jpg");
 
             return outputString;
             // tested 8 may 2017: Works
@@ -85,6 +84,9 @@ namespace AverageTest_IM_console
             avgimg = Convert.ToInt32(str);
 
             string currentdir = Directory.GetCurrentDirectory();
+            string ignorefile = args[1];
+            int ignoreFiles = 0;
+            ignoreFiles = Convert.ToInt32(ignorefile);
             
             
             
@@ -103,8 +105,8 @@ namespace AverageTest_IM_console
             // Create list of all the jpgs in current folder
 
             int fCountAll = Directory.GetFiles(currentdir, "*", SearchOption.TopDirectoryOnly).Length; // count number of files in current dir
-            //int fCount = fCountall - (avgimg +2); // ffmpeg, batfile, (TODO: How many shuld I remove?)
-            int fCount = 5; // as test
+            int fCount = fCountAll - (avgimg + ignoreFiles); // ffmpeg, batfile, program itself
+            //int fCount = 5; // as test
 
             int howFar = 1;
 
@@ -155,12 +157,13 @@ namespace AverageTest_IM_console
                         // p.getConsoleString() gives the correct "convert 000001.jpg 000002.jpg 000003.jpg ... avgimg.jpg", 
                         // 
 
-                        p.setOutputFilename("x");
-                        p.setConsoleString("12");
-                        //Console.WriteLine(p.setOutputFilename("123456")); Works 8 may 2017 15.00 Mads Time
-                        
+
+                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameInt(howFar));
+
+                        Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(howFar.ToString(padding)));
+
                     }
-                    
+
                 }
                 p.clearConsoleString();
                     howFar = howFar + 1; // is incremented after a run through avgimg.
