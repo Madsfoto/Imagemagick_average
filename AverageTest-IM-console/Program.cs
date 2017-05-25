@@ -54,7 +54,7 @@ namespace AverageTest_IM_console
 
         public void clearConsoleString()
         {
-            consoleString = "convert";
+            consoleString = "magick";
         }
 
         public string getOutputFilename()
@@ -76,21 +76,28 @@ namespace AverageTest_IM_console
         static void Main(string[] args)
         {
             Program p = new Program(); // to get access to the functions above
-            
+
 
             // Input number of pictures to average together
             string str = args[0];
-            int avgimg = 0;
-            avgimg = Convert.ToInt32(str); // I am currently unable to take an int directly from thr argument list, hence the conversion here
+            int avgimg = Convert.ToInt32(str); // I am currently unable to take an int directly from the argument list, hence the conversion here
+
 
             string currentdir = Directory.GetCurrentDirectory();
 
+            string skipStr = args[1]; // the string for how many images to skip when averaging
+                                   // The idea is that when you record a video at 30 fps, the resulting averaging "stream" of images, when combined together again
+                                   // is still played at 30 fps. 
+                                   // Then if you want to do timelapse images, you can either record at a lower fps (for instance 10 fps) or ignore some of the resulting averaged images
+                                   // Example 1: Record at 10 fps, average, assemble at 30fps and the result is 1/3rd the time of the original
+                                   // Example 2: Record at 30 fps, average only every n frames, assemble at 30 fps and the result is 1/n'th time of the original. 
+                                   // As of this commit the idea is untested.
 
-            string ignorefile = args[1]; // How many files to ignore at the end, the int ignoreFiles (after being set) is used as a 'max number of images - ignoreFiles'/
-            // limit, but imagemagick errors when you feed it files that does not exist, meaning that the variable itself is useless.
-            int ignoreFiles = 0;
-            ignoreFiles = Convert.ToInt32(ignorefile);
-            
+            // Future work, aka TODO: 
+            // 1: Error handling. The program currently breaks horribly when not given the expected parameters
+            // 2: Averaging a different amount than 1/n, where n is an integer. 
+
+            int skipInt = Convert.ToInt32(skipStr);
             
             
             /* Output console command: 
@@ -108,8 +115,8 @@ namespace AverageTest_IM_console
             // Create list of all the jpgs in current folder
 
             int fCountAll = Directory.GetFiles(currentdir, "*", SearchOption.TopDirectoryOnly).Length; // count number of files in current dir
-            int fCount = fCountAll - (avgimg + ignoreFiles); // ffmpeg, batfile, program itself
-            //int fCount = 5; // as test
+            
+            
 
             int howFar = 1;
 
@@ -119,8 +126,9 @@ namespace AverageTest_IM_console
                                        //Console.Write(fCount.ToString(padding) + ".jpg"); // gives 000010.jpg with fCount = 10. 
 
             
-            for (int counterOfFiles=1; counterOfFiles <= fCount; counterOfFiles++)
+            for (int counterOfFiles=1; counterOfFiles <= fCountAll; counterOfFiles++)
             {
+                counterOfFiles = counterOfFiles + skipInt;
                 p.SetNumOfFilesNumber(howFar); //Set num of files to 1, then to 2 after avgimg has been run through.
                 
 
@@ -131,8 +139,6 @@ namespace AverageTest_IM_console
                 // The files are named 000001.jpg, 000002.jpg and so on.
                 // 
                 
-                
-                //int startnumber = p.GetNumOfFilesNumber();
                 
 
                 for (int counterOfAvgImg=1; counterOfAvgImg <= avgimg; counterOfAvgImg++)
@@ -146,7 +152,7 @@ namespace AverageTest_IM_console
                     
                     string numstring = num.ToString(padding)+".jpg"; // number with padding. Is incremented properly when running through the inner and outer loop.
                     p.setConsoleString(numstring);
-                    // Which means it is in the string addition the problems are. 
+                    
                     
                    
                     num = num + 1;
@@ -160,9 +166,10 @@ namespace AverageTest_IM_console
                         // p.getConsoleString() gives the correct "convert 000001.jpg 000002.jpg 000003.jpg ... avgimg.jpg", 
                         // 
 
-
-                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameInt(howFar));
-
+                        // The problem of incrementing with skipInt in howFar is that the output filename is incremented as well. 
+                        // The obvious solution is to create a different counter that is incremented independently of howFar.
+                        // Not sure if it is the right solution though.
+                        // 
                         Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(howFar.ToString(padding)));
 
                     }
