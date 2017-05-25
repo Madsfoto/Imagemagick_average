@@ -81,10 +81,13 @@ namespace AverageTest_IM_console
             // Input number of pictures to average together
             string str = args[0];
             int avgimg = 0;
-            avgimg = Convert.ToInt32(str);
+            avgimg = Convert.ToInt32(str); // I am currently unable to take an int directly from thr argument list, hence the conversion here
 
             string currentdir = Directory.GetCurrentDirectory();
-            string ignorefile = args[1];
+
+
+            string ignorefile = args[1]; // How many files to ignore at the end, the int ignoreFiles (after being set) is used as a 'max number of images - ignoreFiles'/
+            // limit, but imagemagick errors when you feed it files that does not exist, meaning that the variable itself is useless.
             int ignoreFiles = 0;
             ignoreFiles = Convert.ToInt32(ignorefile);
             
