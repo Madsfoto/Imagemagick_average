@@ -14,13 +14,13 @@ namespace AverageTest_IM_console
     {
 
         // External variables 
-        // make external integer as starting point for the second loop, that is outside the loop. Get set something?
+        // make external integer as starting point for the second loop, that is outside the loop. 
 
         public int numOfFilesNumber = 0;
         public string consoleString = "magick"; // The convert string that should be output of this application. 
         public string howFarStr = "";
         public string outputFilename = "";
-
+        public int numberOfRounds = 1;
 
 
         public int SetNumOfFilesNumber(int newnr)
@@ -119,16 +119,17 @@ namespace AverageTest_IM_console
             
 
             int howFar = 1;
+            
 
             
             //Console.WriteLine(convertString);
             string padding = "000000"; // padding for the integers so they fit the numbering scheme.
-                                       //Console.Write(fCount.ToString(padding) + ".jpg"); // gives 000010.jpg with fCount = 10. 
+                                       
 
             
             for (int counterOfFiles=1; counterOfFiles <= fCountAll; counterOfFiles++)
             {
-                counterOfFiles = counterOfFiles + skipInt;
+                
                 p.SetNumOfFilesNumber(howFar); //Set num of files to 1, then to 2 after avgimg has been run through.
                 
 
@@ -157,10 +158,11 @@ namespace AverageTest_IM_console
                    
                     num = num + 1;
                     
-                    
-                    
 
-                    if(counterOfAvgImg == avgimg)
+
+
+
+                    if (counterOfAvgImg == avgimg)
                     {
                         //setConsoleString(NEW STRING);
                         // p.getConsoleString() gives the correct "convert 000001.jpg 000002.jpg 000003.jpg ... avgimg.jpg", 
@@ -170,14 +172,18 @@ namespace AverageTest_IM_console
                         // The obvious solution is to create a different counter that is incremented independently of howFar.
                         // Not sure if it is the right solution though.
                         // 
-                        Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(howFar.ToString(padding)));
+
+                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(howFar.ToString(padding))); // works 26 may 2017
+                        Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // works 26 may 2017
+                        
 
                     }
 
                 }
                 p.clearConsoleString();
-                    howFar = howFar + 1; // is incremented after a run through avgimg.
-                
+                    howFar = howFar + skipInt; // The starting point for the averaging sequence. 
+                p.numberOfRounds = p.numberOfRounds + 1; // number of rounds is incremented by 1, as it is independent of the skipping. 
+                // 
 
             }
          
