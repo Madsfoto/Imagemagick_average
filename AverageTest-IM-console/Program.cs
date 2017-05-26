@@ -67,7 +67,7 @@ namespace AverageTest_IM_console
             // This function is moddelled from setConsoleString, same functionality. 
             // The consoleString is now looking like "convert 000001.jpg 000002.jpg ... 123456.jpg -average ", 
             // the output filename is "average(currentStartNumber).jpg, where (currentStartNumber) is a 6 digit number.
-            string outputString = String.Concat(" -evaluate_sequence mean ", "average" + currentStartNumber, ".jpg");
+            string outputString = String.Concat(" -evaluate-sequence mean ", "average" + currentStartNumber, ".jpg");
 
             return outputString;
             // tested 8 may 2017: Works
