@@ -7,6 +7,7 @@ _Number_of_images_To_skip_ should be larger an integer larger than 0, as the inc
 
 
 This program is written to solve a very specific problem in a very specific manner, it has sharp corners (for instance, will crash horribly if no arguments are given) and not very helpful. 
+
 Assumptions: All input files have the numbering scheme 000001.jpg, 000002.jpg, 000005 and so forth. For ffmpeg it is assumed that the files are the same pixel size (as in 1920x1080). 
 
 
