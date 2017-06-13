@@ -22,7 +22,7 @@ namespace AverageTest_IM_console
         public string outputFilename = "";
         public int numberOfRounds = 1;
 
-
+        // Get/set of the outer loop. The input newnr is actually the int howFar, incremented with the second argument
         public int SetNumOfFilesNumber(int newnr)
             {
             
@@ -85,7 +85,7 @@ namespace AverageTest_IM_console
 
             string currentdir = Directory.GetCurrentDirectory();
 
-            string skipStr = args[1]; // the string for how many images to skip when averaging
+            string advanceStr = args[1]; // the string for how many images to skip when averaging
                                    // The idea is that when you record a video at 30 fps, the resulting averaging "stream" of images, when combined together again
                                    // is still played at 30 fps. 
                                    // Then if you want to do timelapse images, you can either record at a lower fps (for instance 10 fps) or ignore some of the resulting averaged images
@@ -97,7 +97,7 @@ namespace AverageTest_IM_console
             // 1: Error handling. The program currently breaks horribly when not given the expected parameters
             // 2: Averaging a different amount than 1/n, where n is an integer. 
 
-            int skipInt = Convert.ToInt32(skipStr);
+            int advanceInt = Convert.ToInt32(advanceStr);
             
             
             /* Output console command: 
@@ -180,8 +180,8 @@ namespace AverageTest_IM_console
                     }
 
                 }
-                p.clearConsoleString();
-                    howFar = howFar + skipInt; // The starting point for the averaging sequence. 
+                p.clearConsoleString(); //we need to reset the consoleString after it has been written to have meaningful results
+                    howFar = howFar + advanceInt; // The starting point for the averaging sequence. 
                 p.numberOfRounds = p.numberOfRounds + 1; // number of rounds is incremented by 1, as it is independent of the skipping. 
                 // 
 
