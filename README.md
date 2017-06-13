@@ -1,7 +1,7 @@
 # ImageMagick_average_program
 Average a number of images via command line argument, going through all files in the current folder (Warning: Very basic)
 ## Syntax
-**AverageTest-IM-console.exe Number_Of_Images_To_Average Number_of_images_To_skip > conv.bat**
+**AverageTest-IM-console.exe Number_Of_Images_To_Average Number_of_images_to_advance > a.bat**
 
 _Number_of_images_To_skip_ should be larger an integer larger than 0, as the increment is this integer, so if 0 is the argument, no incrementation is done. 
 
