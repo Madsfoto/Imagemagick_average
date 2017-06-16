@@ -3,7 +3,7 @@ Average a number of images via command line argument, going through all files in
 ## Syntax
 **AverageTest-IM-console.exe Number_Of_Images_To_Average Number_of_images_to_advance > a.bat**
 
-_Number_of_images_To_skip_ should be larger an integer larger than 0, as the increment is this integer, so if 0 is the argument, no incrementation is done. 
+_Number_of_images_To_advance_ should be larger an integer larger than 0, as the increment is this integer, so if 0 is the argument, no incrementation is done. 
 
 
 This program is written to solve a very specific problem in a very specific manner, it has sharp corners (for instance, will crash horribly if no arguments are given) and not very helpful. 

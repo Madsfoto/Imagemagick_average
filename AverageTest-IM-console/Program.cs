@@ -21,6 +21,7 @@ namespace AverageTest_IM_console
         public string howFarStr = "";
         public string outputFilename = "";
         public int numberOfRounds = 1;
+        public string finalstring ="";
 
         // Get/set of the outer loop. The input newnr is actually the int howFar, incremented with the second argument
         public int SetNumOfFilesNumber(int newnr)
@@ -57,6 +58,21 @@ namespace AverageTest_IM_console
             consoleString = "magick";
         }
 
+        public string setPFinalstring(string str)
+        {
+            finalstring = finalstring + str;
+
+            return finalstring;
+        }
+        public string getPFinalString()
+        {
+            return finalstring;
+        }
+
+        public void clearFinalString()
+        {
+            finalstring = "";
+        }
         public string getOutputFilename()
         {
             return outputFilename;
@@ -174,12 +190,22 @@ namespace AverageTest_IM_console
                         // 
 
                         //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(howFar.ToString(padding))); // works 26 may 2017
-                        Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // works 26 may 2017
+                        // String combination into new string, as preperation for making each comand a single .bat file.
+                        // The idea is instead of having one bat file with all the items to average and going through them sequentially and serially,
+                        // the output is one bat file per average.
+                        // Combined with a "watcher" program, in the current idea/implementation, this will allow for parallel execution,
+                        // which in turn will make the averaging process much faster
+                        String finalstring = "";
+                        finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
+                        p.setPFinalstring(finalstring);
+                        Console.WriteLine(p.getPFinalString());
+                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // works 26 may 2017
                         
 
                     }
 
                 }
+                p.clearFinalString();
                 p.clearConsoleString(); //we need to reset the consoleString after it has been written to have meaningful results
                     howFar = howFar + advanceInt; // The starting point for the averaging sequence. 
                 p.numberOfRounds = p.numberOfRounds + 1; // number of rounds is incremented by 1, as it is independent of the skipping. 
