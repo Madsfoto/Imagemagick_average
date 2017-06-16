@@ -16,24 +16,29 @@ namespace AverageTest_IM_console
         // External variables 
         // make external integer as starting point for the second loop, that is outside the loop. 
 
-        public int numOfFilesNumber = 0;
+        public int startNumber = 0;
         public string consoleString = "magick"; // The convert string that should be output of this application. 
         public string howFarStr = "";
         public string outputFilename = "";
         public int numberOfRounds = 1;
         public string finalstring ="";
+        
 
         // Get/set of the outer loop. The input newnr is actually the int howFar, incremented with the second argument
-        public int SetNumOfFilesNumber(int newnr)
+        // In reality it is the starting number for the loops
+        // the StartNumber functions deals with the first number in the averaging sequence, it is the output filename of the finished file,
+        // and the output name of the bat files for consistency. 
+
+        public int setStartNumber(int newnr)
             {
             
-            numOfFilesNumber = newnr;
+            startNumber = newnr;
             return newnr;
             }
 
-        public int GetNumOfFilesNumber()
+        public int getStartNumber()
         {
-            return numOfFilesNumber;
+            return startNumber;
         }
 
         // create string appending function
@@ -58,6 +63,9 @@ namespace AverageTest_IM_console
             consoleString = "magick";
         }
 
+        // The PFinalString functions deals with the output into the bat files. It is 'final' in the sense that,
+        // it will not be changed more when it is used as output.
+
         public string setPFinalstring(string str)
         {
             finalstring = finalstring + str;
@@ -77,20 +85,22 @@ namespace AverageTest_IM_console
         public void writePFinalstring()
         {
             Console.WriteLine(finalstring);
-            
         }
 
+
+       
         // create the function to create a bat file with the 'starting file name that is averaged'(aka 000001).bat
         // Contents: output string like normal
         public void createBatchfile()
         {
             // string with the current output
-            string curStr = finalstring; 
+            string curStr = finalstring;
 
 
             //create file with the correct name
+            // getStartNumber() returns the correct number.
             
-            
+
             // Put the curStr into the file
 
 
@@ -99,7 +109,9 @@ namespace AverageTest_IM_console
 
         }
 
-        public string getOutputFilename()
+        
+
+public string getOutputFilename()
         {
             return outputFilename;
         }
@@ -172,16 +184,17 @@ namespace AverageTest_IM_console
             for (int counterOfFiles=1; counterOfFiles <= fCountAll; counterOfFiles++)
             {
                 
-                p.SetNumOfFilesNumber(howFar); //Set num of files to 1, then to 2 after avgimg has been run through.
+                p.setStartNumber(howFar); //Set num of files to 1, then to 2 after avgimg has been run through.
                 
 
-                int num = p.GetNumOfFilesNumber();
+                int num = p.getStartNumber();
 
                 // doing things with all files in the directory
                 //
                 // The files are named 000001.jpg, 000002.jpg and so on.
                 // 
-                
+
+                p.setStartNumber(counterOfFiles);
                 
 
                 for (int counterOfAvgImg=1; counterOfAvgImg <= avgimg; counterOfAvgImg++)
@@ -195,9 +208,12 @@ namespace AverageTest_IM_console
                     
                     string numstring = num.ToString(padding)+".jpg"; // number with padding. Is incremented properly when running through the inner and outer loop.
                     p.setConsoleString(numstring);
-                   
+
+                    
                     num = num + 1;
-                   
+                    
+
+
                     if (counterOfAvgImg == avgimg)
                     {
                         //setConsoleString(NEW STRING);
