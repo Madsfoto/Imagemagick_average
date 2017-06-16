@@ -69,10 +69,36 @@ namespace AverageTest_IM_console
             return finalstring;
         }
 
-        public void clearFinalString()
+        public void clearPFinalString()
         {
             finalstring = "";
         }
+
+        public void writePFinalstring()
+        {
+            Console.WriteLine(finalstring);
+            
+        }
+
+        // create the function to create a bat file with the 'starting file name that is averaged'(aka 000001).bat
+        // Contents: output string like normal
+        public void createBatchfile()
+        {
+            // string with the current output
+            string curStr = finalstring; 
+
+
+            //create file with the correct name
+            
+            
+            // Put the curStr into the file
+
+
+            // close the file
+
+
+        }
+
         public string getOutputFilename()
         {
             return outputFilename;
@@ -169,19 +195,13 @@ namespace AverageTest_IM_console
                     
                     string numstring = num.ToString(padding)+".jpg"; // number with padding. Is incremented properly when running through the inner and outer loop.
                     p.setConsoleString(numstring);
-                    
-                    
                    
                     num = num + 1;
-                    
-
-
-
-
+                   
                     if (counterOfAvgImg == avgimg)
                     {
                         //setConsoleString(NEW STRING);
-                        // p.getConsoleString() gives the correct "convert 000001.jpg 000002.jpg 000003.jpg ... avgimg.jpg", 
+                        // p.getConsoleString() gives the correct "magick 000001.jpg 000002.jpg 000003.jpg ... avgimg.jpg", 
                         // 
 
                         // The problem of incrementing with skipInt in howFar is that the output filename is incremented as well. 
@@ -189,7 +209,6 @@ namespace AverageTest_IM_console
                         // Not sure if it is the right solution though.
                         // 
 
-                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(howFar.ToString(padding))); // works 26 may 2017
                         // String combination into new string, as preperation for making each comand a single .bat file.
                         // The idea is instead of having one bat file with all the items to average and going through them sequentially and serially,
                         // the output is one bat file per average.
@@ -198,14 +217,20 @@ namespace AverageTest_IM_console
                         String finalstring = "";
                         finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
                         p.setPFinalstring(finalstring);
-                        Console.WriteLine(p.getPFinalString());
-                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // works 26 may 2017
-                        
+                        p.writePFinalstring();
+
+
+                        // p.createBatchfile(); Commented out as it currently does nothing
+                        p.clearPFinalString();
+
+                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
+                        // and the rest of the requred things.
+
 
                     }
 
                 }
-                p.clearFinalString();
+                
                 p.clearConsoleString(); //we need to reset the consoleString after it has been written to have meaningful results
                     howFar = howFar + advanceInt; // The starting point for the averaging sequence. 
                 p.numberOfRounds = p.numberOfRounds + 1; // number of rounds is incremented by 1, as it is independent of the skipping. 
