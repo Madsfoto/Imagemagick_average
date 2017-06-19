@@ -84,7 +84,7 @@ namespace AverageTest_IM_console
 
         public void writePFinalstring()
         {
-           // Console.WriteLine(finalstring); // not required as the console string is written to the .bat files
+            Console.WriteLine(finalstring); 
         }
 
 
@@ -230,16 +230,16 @@ public string getOutputFilename()
                         // the output is one bat file per average.
                         // Combined with a "watcher" program, in the current idea/implementation, this will allow for parallel execution,
                         // which in turn will make the averaging process much faster
-                        String finalstring = "";
-                        finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
-                        p.setPFinalstring(finalstring);
-                        p.writePFinalstring();
+                        //String finalstring = "";
+                        //finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
+                        //p.setPFinalstring(finalstring);
+                        //p.writePFinalstring();
 
+                        // Commented out the batch file creation, as I found https://github.com/ryanph/PS-Parallel which should do what I want.
+                        //p.createBatchfile(); 
+                        //p.clearPFinalString();
 
-                        p.createBatchfile(); 
-                        p.clearPFinalString();
-
-                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
+                        Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
                         // and the rest of the requred things.
 
 
