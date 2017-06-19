@@ -30,11 +30,10 @@ namespace AverageTest_IM_console
         // and the output name of the bat files for consistency. 
 
         public int setStartNumber(int newnr)
-            {
-            
+        {
             startNumber = newnr;
             return newnr;
-            }
+        }
 
         public int getStartNumber()
         {
@@ -84,7 +83,7 @@ namespace AverageTest_IM_console
 
         public void writePFinalstring()
         {
-            Console.WriteLine(finalstring);
+           // Console.WriteLine(finalstring); // not required as the console string is written to the .bat files
         }
 
 
@@ -94,18 +93,18 @@ namespace AverageTest_IM_console
         public void createBatchfile()
         {
             // string with the current output
-            string curStr = finalstring;
+            string currentStr = finalstring;
 
 
             //create file with the correct name
             // getStartNumber() returns the correct number.
-            
+            TextWriter tw = new StreamWriter(getStartNumber()+".bat");
 
-            // Put the curStr into the file
-
+            // Put the currentStr into the file
+            tw.WriteLine(currentStr);
 
             // close the file
-
+            tw.Close();
 
         }
 
@@ -236,7 +235,7 @@ public string getOutputFilename()
                         p.writePFinalstring();
 
 
-                        // p.createBatchfile(); Commented out as it currently does nothing
+                        p.createBatchfile(); 
                         p.clearPFinalString();
 
                         //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
