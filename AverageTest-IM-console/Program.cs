@@ -232,16 +232,16 @@ public string getOutputFilename()
                         // which in turn will make the averaging process much faster
 
                         
-                        String finalstring = "";
-                        finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
-                        p.setPFinalstring(finalstring);
-                        p.writePFinalstring();
+                        //String finalstring = "";
+                        //finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
+                        //p.setPFinalstring(finalstring);
+                        //p.writePFinalstring();
 
                         
                         p.createBatchfile(); 
                         p.clearPFinalString();
 
-                        Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
+                        //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
                         // and the rest of the requred things.
 
 
