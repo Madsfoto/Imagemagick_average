@@ -22,6 +22,7 @@ namespace AverageTest_IM_console
         public string outputFilename = "";
         public int numberOfRounds = 1;
         public string finalstring ="";
+        public int paddingInt = 000000;
         
 
         // Get/set of the outer loop. The input newnr is actually the int howFar, incremented with the second argument
@@ -98,7 +99,7 @@ namespace AverageTest_IM_console
 
             //create file with the correct name
             // getStartNumber() returns the correct number.
-            TextWriter tw = new StreamWriter(getStartNumber()+".bat");
+            TextWriter tw = new StreamWriter(getStartNumber()+".bat"); // TODO: Add padding to the number to make it match the other filenames. 
 
             // Put the currentStr into the file
             tw.WriteLine(currentStr);

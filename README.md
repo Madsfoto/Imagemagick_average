@@ -1,9 +1,12 @@
 # ImageMagick_average_program
 Average a number of images via command line argument, going through all files in the current folder (Warning: Very basic)
 ## Syntax
-**AverageTest-IM-console.exe Number_Of_Images_To_Average Number_of_images_to_advance > a.bat**
+**AverageTest-IM-console.exe Number_Of_Images_To_Average Number_of_images_to_advance **
 
 _Number_of_images_To_advance_ should be larger an integer larger than 0, as the increment is this integer, so if 0 is the argument, no incrementation is done. 
+The output will be a series of bat files, curently named 1.bat, 2.bat, 3.bat etc with the imagemagick comand inside them. The files can be executed with the comand 
+_for %%a in ("*.bat") do "%%a"_  . (currently, as of june 19 2017 untested).
+The plan is to create another program to execute the bat files in parallel to decrease execution time.
 
 
 This program is written to solve a very specific problem in a very specific manner, it has sharp corners (for instance, will crash horribly if no arguments are given) and not very helpful. 
