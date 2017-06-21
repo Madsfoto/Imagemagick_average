@@ -111,7 +111,7 @@ namespace AverageTest_IM_console
 
         
 
-public string getOutputFilename()
+        public string getOutputFilename()
         {
             return outputFilename;
         }
@@ -232,9 +232,9 @@ public string getOutputFilename()
                         // which in turn will make the averaging process much faster
 
                         
-                        //String finalstring = "";
-                        //finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
-                        //p.setPFinalstring(finalstring);
+                        String finalstring = "";
+                        finalstring = p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding));
+                        p.setPFinalstring(finalstring);
                         //p.writePFinalstring();
 
                         
