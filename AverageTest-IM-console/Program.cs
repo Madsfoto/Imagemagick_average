@@ -23,6 +23,7 @@ namespace AverageTest_IM_console
         public int numberOfRounds = 1;
         public string finalstring ="";
         public int paddingInt = 000000;
+        public int avgImgPublic = 0;
         
 
         // Get/set of the outer loop. The input newnr is actually the int howFar, incremented with the second argument
@@ -121,7 +122,7 @@ public string getOutputFilename()
             // This function is moddelled from setConsoleString, same functionality. 
             // The consoleString is now looking like "convert 000001.jpg 000002.jpg ... 123456.jpg -average ", 
             // the output filename is "average(currentStartNumber).jpg, where (currentStartNumber) is a 6 digit number.
-            string outputString = String.Concat(" -evaluate-sequence mean ", "average" + currentStartNumber, ".jpg");
+            string outputString = String.Concat(" -evaluate-sequence mean ", "average" + getAvgImg() + "_"+ currentStartNumber, ".jpg");
 
             return outputString;
             // tested 8 may 2017: Works
@@ -135,7 +136,7 @@ public string getOutputFilename()
             // Input number of pictures to average together
             string str = args[0];
             int avgimg = Convert.ToInt32(str); // I am currently unable to take an int directly from the argument list, hence the conversion here
-
+            p.setAvgImg(avgimg);
 
             string currentdir = Directory.GetCurrentDirectory();
 
@@ -254,6 +255,15 @@ public string getOutputFilename()
 
             }
          
+        }
+
+        public void setAvgImg(int avgimg)
+        {
+            avgImgPublic = avgimg;
+        }
+        public int getAvgImg()
+        {
+            return avgImgPublic;
         }
     }
 }
