@@ -7,7 +7,7 @@
     <ProjectGuid>{B61262FA-817C-46DA-9015-AF090975C405}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>AverageTest_IM_console</RootNamespace>
-    <AssemblyName>AverageTest-IM-console</AssemblyName>
+    <AssemblyName>AveImg</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
