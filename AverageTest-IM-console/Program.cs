@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+// Future work, aka TODO: 
+// 1: Error handling. The program currently breaks horribly when not given the expected parameters
+
+
 namespace AverageTest_IM_console
 {
 
@@ -23,7 +27,9 @@ namespace AverageTest_IM_console
         public int numberOfRounds = 1;
         public string finalstring ="";
         public int paddingInt = 000000;
-        
+        public string autoAdj = "";
+        public int avgImgPublic = 0;
+        public int howFarPublic = 0;
 
         // Get/set of the outer loop. The input newnr is actually the int howFar, incremented with the second argument
         // In reality it is the starting number for the loops
@@ -87,8 +93,27 @@ namespace AverageTest_IM_console
             Console.WriteLine(finalstring); 
         }
 
+        public string setAutoAdj(string autoAdjStr)
+        {
+            autoAdj = autoAdjStr;
+            return autoAdj;
+        }
 
-       
+        public void setAvgImg(int avgimg)
+        {
+            avgImgPublic = avgimg;
+        }
+        public int getAvgImg()
+        {
+            return avgImgPublic;
+        }
+
+        public void setHowFar(int howFar)
+        {
+            howFarPublic = howFar;
+        }
+
+
         // create the function to create a bat file with the 'starting file name that is averaged'(aka 000001).bat
         // Contents: output string like normal
         public void createBatchfile()
@@ -97,12 +122,21 @@ namespace AverageTest_IM_console
             string currentStr = finalstring;
 
 
-            //create file with the correct name
+            // create file with the correct name
             // getStartNumber() returns the correct number.
-            TextWriter tw = new StreamWriter(getStartNumber()+".bat"); // TODO: Add padding to the number to make it match the other filenames. 
+            // Filename
+            int fileNameInt = getStartNumber();
+            string fileName = String.Format("{0:000000}", fileNameInt);
+            
+            TextWriter tw = new StreamWriter(fileName+".bat"); 
 
             // Put the currentStr into the file
-            tw.WriteLine(currentStr);
+            // body
+            tw.WriteLine(currentStr); // Write the normal currentStr to the file
+
+            
+                tw.WriteLine(autoAdj); // This will write the auto adjust command to the file, making sure that the 'averaged' files will have more contrast
+            
 
             // close the file
             tw.Close();
@@ -121,7 +155,8 @@ namespace AverageTest_IM_console
             // This function is moddelled from setConsoleString, same functionality. 
             // The consoleString is now looking like "convert 000001.jpg 000002.jpg ... 123456.jpg -average ", 
             // the output filename is "average(currentStartNumber).jpg, where (currentStartNumber) is a 6 digit number.
-            string outputString = String.Concat(" -evaluate-sequence mean ", "average" + currentStartNumber, ".jpg");
+            // string outputString = String.Concat(" -evaluate-sequence mean ", "average" + currentStartNumber, ".jpg"); // org
+            string outputString = String.Concat(" -evaluate-sequence mean ", "average" + getAvgImg() + "_" + currentStartNumber, ".jpg");
 
             return outputString;
             // tested 8 may 2017: Works
@@ -135,24 +170,9 @@ namespace AverageTest_IM_console
             // Input number of pictures to average together
             string str = args[0];
             int avgimg = Convert.ToInt32(str); // I am currently unable to take an int directly from the argument list, hence the conversion here
-
+            p.setAvgImg(avgimg);
 
             string currentdir = Directory.GetCurrentDirectory();
-
-            string advanceStr = args[1]; // the string for how many images to skip when averaging
-                                   // The idea is that when you record a video at 30 fps, the resulting averaging "stream" of images, when combined together again
-                                   // is still played at 30 fps. 
-                                   // Then if you want to do timelapse images, you can either record at a lower fps (for instance 10 fps) or ignore some of the resulting averaged images
-                                   // Example 1: Record at 10 fps, average, assemble at 30fps and the result is 1/3rd the time of the original
-                                   // Example 2: Record at 30 fps, average only every n frames, assemble at 30 fps and the result is 1/n'th time of the original. 
-                                   // As of this commit the idea is untested.
-
-            // Future work, aka TODO: 
-            // 1: Error handling. The program currently breaks horribly when not given the expected parameters
-            // 2: Averaging a different amount than 1/n, where n is an integer. 
-
-            int advanceInt = Convert.ToInt32(advanceStr);
-            
             
             /* Output console command: 
              * Context: Image_N is starting image, 
@@ -168,7 +188,7 @@ namespace AverageTest_IM_console
 
             // Create list of all the jpgs in current folder
 
-            int fCountAll = Directory.GetFiles(currentdir, "*", SearchOption.TopDirectoryOnly).Length; // count number of files in current dir
+            int fCountAll = Directory.GetFiles(currentdir, "*.jpg", SearchOption.TopDirectoryOnly).Length; // count number of files in current dir
             
             
 
@@ -211,7 +231,7 @@ namespace AverageTest_IM_console
 
                     
                     num = num + 1;
-                    
+                    p.setAutoAdj("magick " + "average" + p.getAvgImg() + "_" + p.numberOfRounds.ToString(padding) + ".jpg" + " -auto-level "+ "average" + p.getAvgImg() + "_" + p.numberOfRounds.ToString(padding) + ".jpg");
 
 
                     if (counterOfAvgImg == avgimg)
@@ -238,7 +258,8 @@ namespace AverageTest_IM_console
                         //p.writePFinalstring();
 
                         
-                        p.createBatchfile(); 
+                        p.createBatchfile();
+                        
                         p.clearPFinalString();
 
                         //Console.WriteLine(p.getConsoleString() + p.setOutputFilenameString(p.numberOfRounds.ToString(padding))); // Writes a line with the current consolestring,
@@ -250,12 +271,17 @@ namespace AverageTest_IM_console
                 }
                 
                 p.clearConsoleString(); //we need to reset the consoleString after it has been written to have meaningful results
-                    howFar = howFar + advanceInt; // The starting point for the averaging sequence. 
+                    howFar = howFar + 1; // The starting point for the averaging sequence. 
+                p.setHowFar(howFar);
+                
+                
                 p.numberOfRounds = p.numberOfRounds + 1; // number of rounds is incremented by 1, as it is independent of the skipping. 
                 // 
 
             }
          
         }
+
+        
     }
 }
