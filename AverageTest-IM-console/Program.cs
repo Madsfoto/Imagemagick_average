@@ -217,7 +217,7 @@ namespace AverageTest_IM_console
                 p.setStartNumber(counterOfFiles);
                 
 
-                for (int counterOfAvgImg=1; counterOfAvgImg <= avgimg; counterOfAvgImg++)
+                for (int counterOfAvgImg=1; counterOfAvgImg <= avgimg+1; counterOfAvgImg++)
                 {
                     // This will run the amount of times specified by the integer set by the command line.
                     // This function should write "000001.jpg 000002.jpg ... avgnr.jpg" as written above. 
